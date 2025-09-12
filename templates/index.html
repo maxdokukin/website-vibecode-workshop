@@ -7,15 +7,86 @@
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   <meta name="theme-color" content="#00ff41">
+  <!-- Resume-derived content seeded into /data CSVs. Source: Resume.pdf :contentReference[oaicite:1]{index=1} -->
 </head>
 <body>
-  <main class="hero">
+  <header class="hero">
     <h1>{{ name }}</h1>
     <p class="subtitle">{{ tagline }}</p>
-    <a class="btn" href="mailto:{{ email }}?subject=Recruit%20Max%20Dokukin">Recruit Me</a>
+    <nav class="cta-row">
+      <a class="btn" href="mailto:{{ email }}?subject=Recruit%20Max%20Dokukin">Recruit Me</a>
+      {% for link in links %}
+        <a class="link" href="{{ link.url }}" target="_blank" rel="noopener">{{ link.label }}</a>
+      {% endfor %}
+    </nav>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>Skills</h2>
+      <div class="skills">
+        {% for cat, items in skills_by_cat.items() %}
+          <div class="skill-cat">
+            <h3>{{ cat }}</h3>
+            <p>{{ ", ".join(items) }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+      {% for job in experience %}
+        <article class="item">
+          <h3>{{ job.role }} — {{ job.company }}</h3>
+          <p class="meta">{{ job.location }} • {{ job.start }} – {{ job.end }}</p>
+          <ul>
+            {% for b in job.bullets %}<li>{{ b }}</li>{% endfor %}
+          </ul>
+        </article>
+      {% endfor %}
+    </section>
+
+    <section>
+      <h2>Projects</h2>
+      {% for p in projects %}
+        <article class="item">
+          <h3>{{ p.title }}</h3>
+          <ul>
+            {% for b in p.bullets %}<li>{{ b }}</li>{% endfor %}
+          </ul>
+        </article>
+      {% endfor %}
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <ul class="edu">
+        {% for e in education %}
+          <li>
+            <strong>{{ e.degree }}</strong>, {{ e.school }} — {{ e.date }}
+            {% if e.notes %}<span class="meta"> • {{ e.notes }}</span>{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Involvement</h2>
+      {% for r in involvement %}
+        <article class="item">
+          <h3>{{ r.role }} — {{ r.org }}</h3>
+          <p class="meta">{{ r.start }} – {{ r.end }}</p>
+          <ul>
+            {% for b in r.bullets %}<li>{{ b }}</li>{% endfor %}
+          </ul>
+        </article>
+      {% endfor %}
+    </section>
   </main>
 
-  <!-- Put an image file named neo.jpg into /static -->
-  <img class="neo" src="{{ url_for('static', filename='neo.jpg') }}" alt="Neo">
+  <!-- Round Neo image in bottom-right -->
+  <img class="neo" src="{{ url_for('static', filename='neo.jpg') }}" alt="Neo" />
+
 </body>
 </html>

@@ -1,0 +1,38 @@
+category,item
+ML Engineering,Python
+ML Engineering,C++
+ML Engineering,TensorFlow
+ML Engineering,TensorFlow Lite
+ML Engineering,Classification
+ML Engineering,CNNs
+ML Engineering,LSTMs
+ML Engineering,Audio DSP
+ML Engineering,MFCCs
+ML Engineering,Confusion Matrices
+Data Pipelines,NumPy
+Data Pipelines,Pandas
+Data Pipelines,SQL
+Data Pipelines,Data Cleaning
+Data Pipelines,Data Labeling
+Data Pipelines,Feature Engineering
+Data Pipelines,Data Provenance
+Data Pipelines,ETL Scripts
+Data Pipelines,Linux
+Data Pipelines,Visualization
+MLOps,CI/CD
+MLOps,GitHub Actions
+MLOps,Docker
+MLOps,GCP / Cloud Run
+MLOps,Model Versioning
+MLOps,Experiment Tracking
+MLOps,A/B Testing
+MLOps,Testing Automation
+MLOps,Documentation
+Performance,Quantization
+Performance,Latency Tuning
+Performance,Memory Optimization
+Performance,Profiling
+Performance,Tensor Arena
+Performance,DMA / I2S / I2C
+Performance,Thread Priorities
+Performance,UI Optimization
