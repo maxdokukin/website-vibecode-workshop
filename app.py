@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
 
@@ -8,6 +8,7 @@ def index():
         "index.html",
         name="Max Dokukin",
         tagline="Student at SJSU",
+        email="max.dokukin@sjsu.edu",  # change if needed
     )
 
 if __name__ == "__main__":
