@@ -1,10 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Max Dokukin — Portfolio</title>
+
+  <!-- Matrix vibe font (with fallbacks) -->
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+  <!-- Matrix rain background -->
+  <canvas id="matrix"></canvas>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
 
+  <main class="hero">
+    <div class="card">
+      <h1 class="glitch" data-text="{{ name }}">{{ name }}</h1>
+      <p class="subtitle">{{ tagline }}</p>
+    </div>
+  </main>
+
+  <script>
+    // Matrix rain animation (no external JS)
+    (function () {
+      const canvas = document.getElementById('matrix');
+      const ctx = canvas.getContext('2d');
+
+      const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const opacityTrail = 0.08; // lower = longer trails
+      let fontSize = 16;
+      let columns = 0;
+      let drops = [];
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        fontSize = Math.max(14, Math.floor(canvas.width / 90));
+        columns = Math.floor(canvas.width / fontSize);
+        drops = Array(columns).fill(0);
+        ctx.font = fontSize + 'px monospace';
+      }
+
+      function draw() {
+        ctx.fillStyle = 'rgba(0,0,0,' + opacityTrail + ')';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#00ff41';
+        for (let i = 0; i < drops.length; i++) {
+          const text = chars.charAt(Math.floor(Math.random() * chars.length));
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      draw();
+    })();
+  </script>
 </body>
 </html>

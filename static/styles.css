@@ -1,0 +1,173 @@
+/* ---------- Theme ---------- */
+:root {
+  --bg-0: #000000;
+  --bg-1: #031403;
+  --glow: #00ff41;      /* Matrix green */
+  --text: #d7ffe0;
+  --text-dim: #8ddfa6;
+  --border: rgba(0, 255, 65, 0.25);
+}
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Share Tech Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 600px at 50% 60%, rgba(0,255,65,0.06), transparent 60%),
+    radial-gradient(800px 400px at 20% 20%, rgba(0,255,65,0.04), transparent 60%),
+    linear-gradient(180deg, var(--bg-1), var(--bg-0));
+  overflow: hidden;
+}
+
+/* ---------- Background Layers ---------- */
+#matrix {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: transparent;
+  z-index: 0;
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 255, 65, 0.05) 0px,
+      rgba(0, 255, 65, 0.05) 2px,
+      rgba(0, 0, 0, 0) 3px,
+      rgba(0, 0, 0, 0) 4px
+    );
+  mix-blend-mode: overlay;
+  animation: scan 8s linear infinite;
+  z-index: 1;
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 200px rgba(0,0,0,0.75);
+  z-index: 2;
+}
+
+@keyframes scan {
+  0% { transform: translateY(-10%); }
+  100% { transform: translateY(10%); }
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  z-index: 3;
+  height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+.card {
+  position: relative;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-radius: 18px;
+  background: rgba(0, 20, 0, 0.3);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0 0 20px rgba(0, 255, 65, 0.08),
+    0 0 60px rgba(0, 255, 65, 0.06);
+  text-align: center;
+}
+
+/* ---------- Glitch Title ---------- */
+.glitch {
+  position: relative;
+  font-size: clamp(40px, 10vw, 120px);
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-shadow:
+    0 0 8px rgba(0, 255, 65, 0.8),
+    0 0 24px rgba(0, 255, 65, 0.55),
+    0 0 48px rgba(0, 255, 65, 0.35);
+  animation: flicker 3s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: var(--glow);
+}
+
+.glitch::before {
+  clip-path: polygon(0 2%, 100% 2%, 100% 44%, 0 44%);
+  transform: translate(-2px, -1px);
+  filter: drop-shadow(0 0 6px rgba(0, 255, 65, 0.6));
+  animation: glitchTop 2.2s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+  transform: translate(2px, 1px);
+  filter: drop-shadow(0 0 6px rgba(0, 255, 65, 0.6));
+  animation: glitchBottom 1.8s infinite linear alternate;
+}
+
+@keyframes glitchTop {
+  0%   { transform: translate(-2px, -1px); }
+  20%  { transform: translate(-4px, -2px); }
+  40%  { transform: translate(-1px, -1px); }
+  60%  { transform: translate(-3px, -2px); }
+  80%  { transform: translate(-2px, -1px); }
+  100% { transform: translate(-5px, -3px); }
+}
+
+@keyframes glitchBottom {
+  0%   { transform: translate(2px, 1px); }
+  20%  { transform: translate(3px, 2px); }
+  40%  { transform: translate(1px, 1px); }
+  60%  { transform: translate(4px, 3px); }
+  80%  { transform: translate(2px, 1px); }
+  100% { transform: translate(5px, 3px); }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 0.98; }
+  94% { opacity: 0.85; }
+  96% { opacity: 1; }
+  98% { opacity: 0.92; }
+}
+
+/* ---------- Subtitle ---------- */
+.subtitle {
+  margin-top: 0.9rem;
+  font-size: clamp(16px, 2.6vw, 26px);
+  color: var(--text-dim);
+  text-shadow:
+    0 0 6px rgba(0, 255, 65, 0.4),
+    0 0 18px rgba(0, 255, 65, 0.25);
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Selections and Focus ---------- */
+::selection {
+  background: rgba(0, 255, 65, 0.25);
+  color: var(--text);
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 420px) {
+  .card { padding: 1.25rem; border-radius: 14px; }
+}
